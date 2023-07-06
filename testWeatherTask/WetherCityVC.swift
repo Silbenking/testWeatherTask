@@ -58,6 +58,30 @@ class WetherCityVC: UIViewController {
         label.text = "Max температура днем"
         return label
     }()
+    let pressureValueLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.text = "1000 мм.рт.ст"
+        return label
+    }()
+    let speedValueLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.text = "1000 м/c"
+        return label
+    }()
+    let minTemperatureValueLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.text = "1000 °C"
+        return label
+    }()
+    let maxTemperatureValueLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.text = "1000 °C"
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +117,18 @@ class WetherCityVC: UIViewController {
         leftStack.snp.makeConstraints { make in
             make.top.equalTo(topStack.snp.bottom).offset(30)
             make.leading.equalToSuperview().inset(20)
+        }
+        let righttStack = UIStackView()
+        view.addSubview(righttStack)
+        righttStack.addArrangedSubview(pressureValueLabel)
+        righttStack.addArrangedSubview(speedValueLabel)
+        righttStack.addArrangedSubview(minTemperatureValueLabel)
+        righttStack.addArrangedSubview(maxTemperatureValueLabel)
+        righttStack.axis = .vertical
+        righttStack.spacing = 10
+        righttStack.snp.makeConstraints { make in
+            make.top.equalTo(topStack.snp.bottom).offset(30)
+            make.trailing.equalToSuperview().inset(20)
         }
     }
 

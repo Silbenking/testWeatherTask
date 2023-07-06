@@ -9,29 +9,15 @@ import UIKit
 
 class TableViewWether: UITableViewController {
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchWeather()
-        tableView.register( TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
-        tableView.dataSource = self
-        tableView.delegate = self
+        initialize()
+        NetworkWeatherManager().fetchWeather()
     }
     
-    func fetchWeather() {
-        guard let url = URL(string: "https://api.weather.yandex.ru/v2/forecast?lat=55.75396&lon=37.620393") else {return}
-        var request = URLRequest(url: url, timeoutInterval: Double.infinity)
-        request.addValue("d05cf56d-a117-4997-8ad8-ec1b9d6adbda", forHTTPHeaderField: "X-Yandex-API-Key")
-        request.httpMethod = "GET"
-        
-        let session = URLSession.shared
-        session.dataTask(with: request) { (data, response, error) in
-            guard let data = data else {
-                print(String(describing: error))
-                return
-            }
-            print(String(data: data, encoding: .utf8)!)
-        }.resume()
-        
+    func initialize(){
+        tableView.register( TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
     }
     // MARK: - Table view data source
     

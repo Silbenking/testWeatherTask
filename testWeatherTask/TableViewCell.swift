@@ -45,7 +45,7 @@ class TableViewCell: UITableViewCell {
         nameCityLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(UIConstant.nameCityLeadingOfset)
             make.top.equalToSuperview().offset(10)
-//            make.bottom.equalToSuperview().offset(10)
+            make.bottom.equalToSuperview().inset(10)
         }
         contentView.addSubview(temperatureLabel)
         temperatureLabel.snp.makeConstraints { make in
