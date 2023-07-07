@@ -10,6 +10,8 @@ import SnapKit
 
 class WetherCityVC: UIViewController {
 
+    var weatherModel: Weather? // создаю экземпляр модели, через который буду передавать данные о погоде
+    
     let nameCityLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -85,6 +87,9 @@ class WetherCityVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DispatchQueue.main.async {
+            self.refreshLabel()
+        }
         
         initialize()
     }
@@ -132,5 +137,14 @@ class WetherCityVC: UIViewController {
         }
     }
 
+    func refreshLabel() {
+        nameCityLabel.text = weatherModel?.name
+        conditionWeatherLabel.text = weatherModel?.conditionString
+        temperatureLabel.text = (weatherModel?.temperatureString ?? "nil") + "°C"
+        pressureValueLabel.text = "\(weatherModel?.pressureMm ?? 0)" + "мм.рт.ст"
+        speedValueLabel.text = "\(weatherModel?.windSpeed ?? 0)" + "м/c"
+        minTemperatureValueLabel.text = "\(weatherModel?.tempMin ?? 0)" + "°C"
+        maxTemperatureValueLabel.text = "\(weatherModel?.tempMax ?? 0)" + "°C"
+    }
 
 }

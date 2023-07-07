@@ -21,7 +21,8 @@ class TableViewCell: UITableViewCell {
     }()
     let weatherConditionsLabel: UILabel = {
         let label = UILabel()
-        
+        label.textColor = .gray
+        label.font = .systemFont(ofSize: 12)
         return label
     }()
     
@@ -54,9 +55,14 @@ class TableViewCell: UITableViewCell {
         }
         contentView.addSubview(weatherConditionsLabel)
         weatherConditionsLabel.snp.makeConstraints { make in
-//            make.leading.equalToSuperview().inset(UIConstant.temperatureTreilingOfset)
+            make.trailing.equalTo(temperatureLabel.snp.trailing).inset(50)
             make.centerY.equalTo(nameCityLabel)
-            make.centerX.equalToSuperview()
+            
         }
+    }
+    func configure(weather: Weather){ // метод, который заполняет таблицу, принимает модель Weather, заполняем все наши label
+        self.nameCityLabel.text = weather.name
+        self.temperatureLabel.text = weather.temperatureString + "°C"
+        self.weatherConditionsLabel.text = weather.conditionString
     }
 }

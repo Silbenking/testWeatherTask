@@ -9,14 +9,17 @@ import Foundation // структура погоды, используем ко�
 // модель, с которой будем рабоать в приложении 
 struct Weather { // вводим все данные которые будут в погоде и которые нам необходимы
     var name: String = "Название"
-    var temperature: Int
-    var conditionCode: String // картинка которая будет приходить ссылкой
-    var url: String
-    var condition: String // условия погоды
-    var pressureMm: Int
-    var windSpeed: Int
-    var tempMax: Int
-    var tempMin: Int
+    var temperature: Int = 0
+    var temperatureString: String {
+        return String(temperature)
+    }
+    var conditionCode: String = "" // картинка которая будет приходить ссылкой
+    var url: String = ""
+    var condition: String = "" // условия погоды
+    var pressureMm: Int = 0
+    var windSpeed: Int = 0
+    var tempMax: Int = 0
+    var tempMin: Int = 0
     
     var conditionString: String {
         switch condition {
@@ -50,4 +53,7 @@ struct Weather { // вводим все данные которые будут �
         tempMax = weatherData.forecasts?.first?.parts?.day?.tempMax ?? 0 // обращаемся через first так как массив
         tempMin = weatherData.forecasts?.first?.parts?.day?.tempMin ?? 0
     }
+    init() {
+    }
+   
 }
