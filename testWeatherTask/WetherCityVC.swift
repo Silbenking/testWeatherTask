@@ -7,10 +7,12 @@
 
 import UIKit
 import SnapKit
+import SwiftSVG
+import SVGKit
 
 class WetherCityVC: UIViewController {
 
-    var weatherModel: Weather? // создаю экземпляр модели, через который буду передавать данные о погоде
+//    var weatherModel: Weather? // создаю экземпляр модели, через который буду передавать данные о погоде
     
     let nameCityLabel: UILabel = {
         let label = UILabel()
@@ -20,7 +22,6 @@ class WetherCityVC: UIViewController {
     }()
     let conditionImage: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "no")
         return image
     }()
     let conditionWeatherLabel: UILabel = {
@@ -63,34 +64,26 @@ class WetherCityVC: UIViewController {
     let pressureValueLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.text = "1000 мм.рт.ст"
         return label
     }()
     let speedValueLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.text = "1000 м/c"
         return label
     }()
     let minTemperatureValueLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.text = "1000 °C"
         return label
     }()
     let maxTemperatureValueLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.text = "1000 °C"
         return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        DispatchQueue.main.async {
-            self.refreshLabel()
-        }
-        
         initialize()
     }
     
@@ -137,14 +130,31 @@ class WetherCityVC: UIViewController {
         }
     }
 
-    func refreshLabel() {
-        nameCityLabel.text = weatherModel?.name
-        conditionWeatherLabel.text = weatherModel?.conditionString
-        temperatureLabel.text = (weatherModel?.temperatureString ?? "nil") + "°C"
-        pressureValueLabel.text = "\(weatherModel?.pressureMm ?? 0)" + "мм.рт.ст"
-        speedValueLabel.text = "\(weatherModel?.windSpeed ?? 0)" + "м/c"
-        minTemperatureValueLabel.text = "\(weatherModel?.tempMin ?? 0)" + "°C"
-        maxTemperatureValueLabel.text = "\(weatherModel?.tempMax ?? 0)" + "°C"
+    func refreshLabel(weather: Weather) {
+//        nameCityLabel.text = weatherModel?.name
+//        conditionWeatherLabel.text = weatherModel?.conditionString
+//        temperatureLabel.text = (weatherModel?.temperatureString ?? "nil") + "°C"
+//        pressureValueLabel.text = "\(weatherModel?.pressureMm ?? 0)" + "мм.рт.ст"
+//        speedValueLabel.text = "\(weatherModel?.windSpeed ?? 0)" + "м/c"
+//        minTemperatureValueLabel.text = "\(weatherModel?.tempMin ?? 0)" + "°C"
+//        maxTemperatureValueLabel.text = "\(weatherModel?.tempMax ?? 0)" + "°C"
+        
+        
+            self.nameCityLabel.text = weather.name
+            guard let url = URL(string: "https://yastatic.net/weather/i/icons/funky/dark/\(weather.conditionCode).svg") else {return}
+//            let weatherImage = UIView(SVGURL: url) {(image) in
+//                image.resizeToFit(self.conditionImage.bounds)
+//            }
+            let weatherImage = SVGKImage(contentsOf: url)
+            self.conditionImage.image = weatherImage?.uiImage
+        
+      
+        conditionWeatherLabel.text = weather.conditionString
+        temperatureLabel.text = weather.temperatureString + "°C"
+        pressureValueLabel.text = "\(weather.pressureMm)" + "мм.рт.ст"
+        speedValueLabel.text = "\(weather.windSpeed)" + "м/c"
+        minTemperatureValueLabel.text = "\(weather.tempMin)" + "°C"
+        maxTemperatureValueLabel.text = "\(weather.tempMax)" + "°C"
     }
 
 }
